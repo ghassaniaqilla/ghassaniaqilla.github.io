@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#5b4536">
+<title>Perpustaka Raya — Perpustakaan, Menulis & Penerbitan</title>
+<style>
+:root{
+ --ink:#3f342b;--brown:#6c5140;--brown2:#8b6b53;--cream:#f7f0e4;--paper:#fffaf1;
+ --sand:#e7d7bf;--sage:#cbd3bd;--sage-dark:#68785f;--rose:#e8d1c7;--gold:#c3a36b;
+ --line:#e7dccb;--muted:#86786b;--shadow:0 12px 35px rgba(71,52,36,.09);--radius:20px;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:Georgia,"Times New Roman",serif}
+button,input,select,textarea{font:inherit} button{cursor:pointer}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #c3a36b;outline-offset:2px}
+.app{min-height:100vh;display:grid;grid-template-columns:250px minmax(0,1fr)}
+.sidebar{background:linear-gradient(160deg,#4b392e,#6b5140 65%,#7b6652);color:#f8f0e4;padding:25px 17px;display:flex;flex-direction:column;gap:25px;position:sticky;top:0;height:100vh;overflow:auto}
+.brand{display:flex;gap:12px;align-items:center;padding:4px 8px 20px;border-bottom:1px solid #ffffff25}
+.brand-mark{width:45px;height:45px;border:1px solid #d7bf8a;border-radius:50%;display:grid;place-items:center;font-size:24px;color:#ead8ad}
+.brand h1{font-size:20px;line-height:1.05;margin:0;letter-spacing:.3px}.brand small{display:block;color:#dbcbb7;font:11px Arial,sans-serif;letter-spacing:1.8px;text-transform:uppercase;margin-top:7px}
+.nav-label{font:10px Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;color:#cbb8a3;padding:0 12px;margin:0 0 8px}
+.nav{display:grid;gap:5px}.nav button{border:0;background:transparent;color:#f4e8d8;text-align:left;padding:12px;border-radius:12px;display:flex;align-items:center;gap:12px;font-size:14px;transition:.2s}
+.nav button:hover,.nav button.active{background:#ffffff18;color:#fff4d9}.nav .ico{font-size:18px;width:22px;text-align:center}
+.side-note{margin-top:auto;border:1px solid #ffffff2b;background:#ffffff0d;padding:16px;border-radius:16px;color:#e9d9c4;font-size:13px;line-height:1.55}
+.side-note strong{display:block;color:#fff0d3;font-size:15px;margin-bottom:5px}
+main{min-width:0;padding:25px clamp(16px,3vw,42px) 45px;max-width:1600px;width:100%;margin:0 auto}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:25px}
+.eyebrow{font:11px Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;color:var(--sage-dark)}
+h2,h3,p{margin-top:0}h2{font-size:clamp(27px,3vw,39px);font-weight:normal;margin:8px 0 10px;line-height:1.12}h3{font-size:20px;font-weight:normal;margin-bottom:8px}
+.top-sub{color:var(--muted);font:13px/1.5 Arial,sans-serif}
+.top-actions{display:flex;align-items:center;gap:9px}
+.icon-btn{width:42px;height:42px;border:1px solid var(--line);background:var(--paper);border-radius:50%;color:var(--brown);font-size:17px}
+.profile{display:flex;align-items:center;gap:10px;background:#fffaf1;border:1px solid var(--line);border-radius:30px;padding:5px 13px 5px 5px;font:12px Arial,sans-serif}
+.avatar{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--sage);font-size:16px}
+.view{display:none;animation:appear .25s ease}.view.active{display:block}@keyframes appear{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}
+.hero{position:relative;overflow:hidden;border-radius:26px;background:linear-gradient(110deg,#e8dcc7 0%,#f2e7d4 57%,#d8dfcd 100%);padding:clamp(24px,4vw,48px);min-height:250px;display:flex;align-items:center;box-shadow:var(--shadow);margin-bottom:24px}
+.hero-copy{max-width:590px;position:relative;z-index:1}.hero h2{font-size:clamp(32px,4vw,49px);max-width:560px}.hero p{font:14px/1.7 Arial,sans-serif;color:#6e6254;max-width:470px}
+.hero-art{position:absolute;right:3%;bottom:-9px;width:34%;height:90%;min-width:220px;display:flex;align-items:end;justify-content:center;opacity:.9}
+.arch{width:180px;height:235px;border:8px solid #b9a17b;border-bottom:0;border-radius:100px 100px 0 0;position:absolute;bottom:0;background:#cbd3bd66}
+.arch:before{content:"";position:absolute;inset:18px 17px 0;border:2px solid #f9f0de;border-bottom:0;border-radius:90px 90px 0 0}
+.book-stack{position:absolute;bottom:0;right:0;width:210px;height:125px}
+.book{height:27px;border-radius:4px 8px 8px 4px;position:absolute;right:0;box-shadow:inset 6px 0 #ffffff35,0 3px 4px #473a2b24;border:1px solid #7a5c4530}
+.book:after{content:"";position:absolute;left:14px;right:14px;top:7px;border-top:1px solid #f7e7c2aa}
+.b1{width:190px;bottom:0;background:#7e8a70}.b2{width:170px;bottom:28px;background:#b98b70;right:16px}.b3{width:200px;bottom:56px;background:#d0b77f;right:4px}.b4{width:145px;bottom:84px;background:#8b6b53;right:27px}
+.leaf{position:absolute;right:8%;top:20px;font-size:55px;color:#859276;transform:rotate(20deg);opacity:.65}
+.btn{border:0;border-radius:12px;padding:12px 17px;background:var(--brown);color:#fff7e9;font:13px Arial,sans-serif;transition:.18s;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn:hover{background:#4e3a2e;transform:translateY(-1px)}.btn.secondary{background:#e7dccb;color:var(--brown)}.btn.secondary:hover{background:#ddcbb3}.btn.sage{background:var(--sage-dark)}.btn.small{padding:8px 11px;font-size:12px}.btn.outline{background:transparent;color:var(--brown);border:1px solid var(--line)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:20px 0 30px}
+.stat{padding:17px 19px;background:var(--paper);border:1px solid var(--line);border-radius:17px;display:flex;align-items:center;gap:13px}
+.stat-icon{height:43px;width:43px;display:grid;place-items:center;border-radius:14px;background:#e9dfcc;font-size:20px}
+.stat:nth-child(2) .stat-icon{background:#dce3d2}.stat:nth-child(3) .stat-icon{background:#f0ddd4}.stat:nth-child(4) .stat-icon{background:#e4d9e6}
+.stat strong{display:block;font-size:24px;font-weight:normal}.stat span{font:11px Arial,sans-serif;color:var(--muted);display:block;margin-top:3px}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:15px;margin:0 0 15px}.section-head h3{margin:0}.section-head p{font:12px Arial,sans-serif;color:var(--muted);margin:5px 0 0}
+.book-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.book-card{background:var(--paper);border:1px solid var(--line);border-radius:17px;padding:12px;min-width:0;transition:.2s}
+.book-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.cover{height:170px;border-radius:11px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;margin-bottom:13px;color:#f8edda;text-align:center;padding:17px;background:#7d8a72}
+.cover:before{content:"";position:absolute;inset:9px;border:1px solid #f7e8c677;border-radius:5px}
+.cover:after{content:"✦";position:absolute;top:17px;font-size:14px;color:#f4ddb0}
+.cover-title{position:relative;z-index:1;font-size:20px;line-height:1.1;text-shadow:0 1px 2px #3334}
+.cover small{display:block;font:9px Arial,sans-serif;letter-spacing:1.5px;margin-top:9px}
+.c2{background:#a77965}.c3{background:#6f7e91}.c4{background:#b39b6d;color:#fff8e7}.c5{background:#8c7990}.c6{background:#8b6b53}.c7{background:#8a947d}.c8{background:#bb9d88}
+.book-card h4{font-size:16px;font-weight:normal;margin:0 0 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.author{font:11px Arial,sans-serif;color:var(--muted);margin-bottom:12px}
+.book-meta{display:flex;align-items:center;justify-content:space-between;gap:8px}.price{font:13px Arial,sans-serif;color:var(--brown);font-weight:bold}.tag{background:#e6eadf;color:#65745c;padding:5px 8px;border-radius:20px;font:10px Arial,sans-serif}
+.card-actions{display:flex;gap:7px;margin-top:12px}.card-actions button{flex:1}
+.two-col{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(260px,.8fr);gap:20px;margin-top:28px}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:19px;padding:21px;min-width:0}
+.panel-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}.panel-head h3{margin:0}
+.activity{display:grid;gap:14px}.activity-row{display:flex;align-items:center;gap:12px;font:12px Arial,sans-serif}
+.activity-icon{width:39px;height:39px;border-radius:12px;display:grid;place-items:center;background:#e8dfcf;font-size:17px;flex-shrink:0}
+.activity-row strong{display:block;font-weight:normal;font-size:13px;margin-bottom:4px}.activity-row small{color:var(--muted)}
+.garden-card{background:#dce2d3;border-radius:15px;padding:19px;position:relative;overflow:hidden;min-height:185px}
+.garden-card:after{content:"❧";font-size:130px;position:absolute;right:5px;bottom:-35px;color:#8e9c7e;opacity:.5;transform:rotate(-20deg)}
+.garden-card p{font:12px/1.7 Arial,sans-serif;max-width:240px;color:#53624b;position:relative;z-index:1}
+.garden-card h3{position:relative;z-index:1}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:18px 0}
+.search{position:relative;flex:1;min-width:190px}.search input{width:100%;padding:12px 14px 12px 39px;border:1px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink);font:13px Arial,sans-serif}
+.search span{position:absolute;left:13px;top:10px;color:var(--muted)}
+select,.field input,.field textarea,.field select{border:1px solid var(--line);border-radius:11px;background:#fffdf8;padding:11px 12px;color:var(--ink);width:100%;font:13px Arial,sans-serif}
+.toolbar select{width:auto;min-width:140px}
+.field{display:grid;gap:7px;margin-bottom:14px}.field label{font:12px Arial,sans-serif;color:#6f6255}.field textarea{min-height:100px;resize:vertical;line-height:1.6}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 14px}
+.empty{padding:35px 15px;text-align:center;color:var(--muted);font:13px Arial,sans-serif;grid-column:1/-1}
+.read-layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:20px;margin-top:20px}
+.read-list{display:grid;gap:8px;align-content:start}.read-pick{border:1px solid var(--line);background:var(--paper);padding:12px;border-radius:12px;text-align:left;color:var(--ink)}.read-pick.active{border-color:var(--gold);background:#f0e6d4}
+.reader{background:#fffaf1;border:1px solid var(--line);border-radius:18px;padding:clamp(22px,4vw,50px);min-height:380px}
+.reader .chapter{font:10px Arial,sans-serif;letter-spacing:2px;color:var(--sage-dark);text-transform:uppercase}.reader h3{font-size:31px;margin:12px 0 8px}
+.reader-text{font-size:17px;line-height:1.95;color:#594a3d;white-space:pre-wrap}
+.editor{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(230px,.7fr);gap:18px;margin-top:20px}
+#manuscript{min-height:390px;font:15px/1.8 Georgia,serif;background:#fffdf8}
+.mini-note{font:12px/1.6 Arial,sans-serif;color:var(--muted)}
+.notice{border-radius:12px;padding:12px 14px;background:#e7eadf;color:#59654e;font:12px/1.6 Arial,sans-serif;margin:12px 0}
+.kpi{display:flex;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid var(--line);font:13px Arial,sans-serif}.kpi:last-child{border:0}.kpi span{color:var(--muted)}
+.cart-row{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}.cart-row:last-child{border:0}.cart-thumb{width:45px;height:58px;border-radius:5px;background:#8b6b53;flex-shrink:0;display:grid;place-items:center;color:#fff0d6}.cart-row .grow{flex:1;min-width:0}.cart-row strong{font-weight:normal;font-size:14px;display:block;margin-bottom:5px}.cart-row small{font:11px Arial,sans-serif;color:var(--muted)}
+.footer{text-align:center;color:#a09586;font:11px Arial,sans-serif;margin-top:40px;padding-top:20px;border-top:1px solid var(--line)}
+.toast{position:fixed;right:20px;bottom:20px;background:#4b392e;color:#fff4e1;padding:13px 18px;border-radius:12px;box-shadow:var(--shadow);font:13px Arial,sans-serif;z-index:20;opacity:0;transform:translateY(10px);pointer-events:none;transition:.25s;max-width:min(360px,calc(100vw - 40px))}
+.toast.show{opacity:1;transform:translateY(0)}
+.modal-backdrop{position:fixed;inset:0;background:#241b16a8;display:none;place-items:center;padding:20px;z-index:30}.modal-backdrop.show{display:grid}
+.modal{background:var(--paper);border-radius:20px;padding:25px;width:min(480px,100%);max-height:85vh;overflow:auto;box-shadow:var(--shadow)}
+.modal-head{display:flex;justify-content:space-between;align-items:center}.modal-head h3{margin:0}
+.mobile-menu{display:none}
+@media(max-width:1100px){.app{grid-template-columns:215px minmax(0,1fr)}.book-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.hero-art{right:-20px;opacity:.55}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.app{display:block}.sidebar{position:fixed;z-index:40;left:-270px;top:0;width:250px;height:100vh;transition:left .25s;box-shadow:var(--shadow)}.sidebar.open{left:0}.mobile-menu{display:inline-grid;place-items:center}.topbar{align-items:flex-start}.top-actions .profile span:last-child{display:none}main{padding:18px 14px 35px}.hero{min-height:260px}.hero-art{right:-55px;opacity:.28}.hero-copy{max-width:100%}.book-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.cover{height:145px}.two-col,.editor{grid-template-columns:1fr}.read-layout{grid-template-columns:1fr}.read-list{grid-template-columns:repeat(2,minmax(0,1fr))}.stats{gap:9px}.stat{padding:13px}.stat-icon{width:35px;height:35px}.stat strong{font-size:20px}.form-grid{grid-template-columns:1fr}.topbar{gap:8px}.top-sub{max-width:220px}.section-head{align-items:start}.toolbar select{flex:1}.panel{padding:16px}}
+@media(max-width:390px){.book-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cover{height:125px}.cover-title{font-size:17px}.stat{gap:8px;padding:10px}.stat-icon{display:none}.brand h1{font-size:18px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+  <div class="brand"><div class="brand-mark">✧</div><div><h1>Perpustaka Raya</h1><small>Ruang ilmu & cerita</small></div></div>
+  <div><p class="nav-label">Jelajahi</p><nav class="nav" id="nav">
+    <button class="active" data-view="home"><span class="ico">⌂</span>Beranda</button>
+    <button data-view="library"><span class="ico">▤</span>Perpustakaan</button>
+    <button data-view="reading"><span class="ico">☷</span>Ruang Membaca</button>
+    <button data-view="shop"><span class="ico">♧</span>Toko Buku <span id="cartCount" style="margin-left:auto;background:#d9c49c;color:#4b392e;padding:3px 7px;border-radius:20px;font:10px Arial">0</span></button>
+  </nav></div>
+  <div><p class="nav-label">Karya & penerbitan</p><nav class="nav">
+    <button data-view="writing"><span class="ico">✎</span>Ruang Menulis</button>
+    <button data-view="printing"><span class="ico">▣</span>Cetak & Terbitkan</button>
+    <button data-view="collection"><span class="ico">♡</span>Koleksi Saya</button>
+  </nav></div>
+  <div class="side-note"><strong>❧ Sudut taman</strong>Ambil jeda, hirup udara segar, lalu kembali menyelami halaman demi halaman.<br><br><span style="font-size:11px">“Buku adalah taman yang bisa dibawa ke mana saja.”</span></div>
+</aside>
+<main>
+<header class="topbar">
+  <div style="display:flex;align-items:flex-start;gap:10px"><button class="icon-btn mobile-menu" id="menuBtn" aria-label="Buka menu">☰</button><div><div class="eyebrow" id="dateLine">Perpustakaan pribadi Anda</div><div class="top-sub">Sebuah rumah teduh bagi setiap cerita.</div></div></div>
+  <div class="top-actions"><button class="icon-btn" title="Cari buku" id="quickSearch">⌕</button><div class="profile"><div class="avatar">♙</div><span>Pengunjung</span></div></div>
+</header>
+
+<section class="view active" id="view-home">
+  <div class="hero"><div class="hero-copy"><div class="eyebrow">Selamat datang di rumah ilmu</div><h2>Temukan cerita,<br>rawat imajinasi.</h2><p>Perpustakaan bernuansa taman dan istana klasik untuk membaca, menulis, membeli, mencetak, hingga menerbitkan buku dalam satu ruang.</p><button class="btn" data-go="library">Jelajahi perpustakaan <span>→</span></button></div><div class="hero-art" aria-hidden="true"><div class="arch"></div><span class="leaf">❧</span><div class="book-stack"><i class="book b1"></i><i class="book b2"></i><i class="book b3"></i><i class="book b4"></i></div></div></div>
+  <div class="stats">
+    <div class="stat"><div class="stat-icon">▤</div><div><strong id="statBooks">8</strong><span>Katalog buku</span></div></div>
+    <div class="stat"><div class="stat-icon">♡</div><div><strong id="statSaved">0</strong><span>Koleksi tersimpan</span></div></div>
+    <div class="stat"><div class="stat-icon">✎</div><div><strong id="statDrafts">0</strong><span>Naskah pribadi</span></div></div>
+    <div class="stat"><div class="stat-icon">♧</div><div><strong id="statCart">0</strong><span>Buku di keranjang</span></div></div>
+  </div>
+  <div class="section-head"><div><h3>Pilihan pustakawan</h3><p>Beberapa bacaan untuk memulai perjalananmu.</p></div><button class="btn outline small" data-go="library">Lihat semua →</button></div>
+  <div class="book-grid" id="featuredBooks"></div>
+  <div class="two-col">
+    <div class="panel"><div class="panel-head"><h3>Jejak aktivitas</h3><span style="font-size:20px;color:var(--gold)">✧</span></div><div class="activity" id="activityList"></div></div>
+    <div class="garden-card"><div class="eyebrow">Ruang jeda</div><h3>Taman pembaca</h3><p>Setiap halaman adalah benih. Beri waktu untuk tumbuh, dan biarkan rasa ingin tahu menjadi jalan setapakmu.</p><button class="btn sage" data-go="reading">Duduk & membaca</button></div>
+  </div>
+</section>
+
+<section class="view" id="view-library">
+  <div class="eyebrow">Rak-rak pengetahuan</div><h2>Perpustakaan</h2><p class="top-sub">Cari buku, jelajahi kategori, atau simpan bacaan yang ingin kamu kunjungi lagi.</p>
+  <div class="toolbar"><div class="search"><span>⌕</span><input id="librarySearch" placeholder="Cari judul, penulis, atau kategori..."></div><select id="categoryFilter" aria-label="Filter kategori"><option value="all">Semua kategori</option><option>Fiksi</option><option>Pendidikan</option><option>Sejarah</option><option>Pengembangan Diri</option><option>Puisi</option></select><select id="sortBooks" aria-label="Urutkan buku"><option value="default">Urutan pilihan</option><option value="title">Judul A–Z</option><option value="price">Harga terendah</option></select></div>
+  <div class="book-grid" id="libraryBooks"></div>
+</section>
+
+<section class="view" id="view-reading">
+  <div class="eyebrow">Sudut baca yang tenang</div><h2>Ruang Membaca</h2><p class="top-sub">Pilih bacaan contoh di sebelah kiri. Simpan buku ke koleksi agar mudah ditemukan kembali.</p>
+  <div class="read-layout"><div class="read-list" id="readList"></div><article class="reader"><div class="chapter" id="readerCategory">Bacaan pilihan</div><h3 id="readerTitle">Taman di Balik Perpustakaan</h3><div class="author" id="readerAuthor">Naskah contoh · Perpustaka Raya</div><hr style="border:0;border-top:1px solid var(--line);margin:20px 0"><div class="reader-text" id="readerText"></div><div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:25px"><button class="btn" id="saveReading">♡ Simpan ke koleksi</button><button class="btn secondary" id="nextReading">Bacaan berikutnya →</button></div><p class="mini-note" style="margin-top:14px">Catatan: teks pada ruang membaca ini merupakan contoh singkat untuk demonstrasi aplikasi.</p></article></div>
+</section>
+
+<section class="view" id="view-shop">
+  <div class="eyebrow">Kedai buku klasik</div><h2>Toko Buku</h2><p class="top-sub">Pilih buku dan masukkan ke keranjang. Transaksi pada contoh ini bersifat simulasi, bukan pembayaran sungguhan.</p>
+  <div class="toolbar"><div class="search"><span>⌕</span><input id="shopSearch" placeholder="Buku apa yang sedang kamu cari?"></div><button class="btn" id="openCart">♧ Keranjang (<span id="cartCount2">0</span>)</button></div>
+  <div class="book-grid" id="shopBooks"></div>
+  <div class="panel" style="margin-top:22px" id="cartPanel"><div class="panel-head"><h3>Keranjang belanja</h3><button class="btn outline small" id="clearCart">Kosongkan</button></div><div id="cartItems"></div><div style="display:flex;align-items:center;justify-content:space-between;gap:15px;margin-top:16px"><div><div class="mini-note">Total simulasi</div><strong id="cartTotal" style="font-size:23px;font-weight:normal">Rp0</strong></div><button class="btn" id="checkoutBtn">Lanjutkan pesanan →</button></div></div>
+</section>
+
+<section class="view" id="view-writing">
+  <div class="eyebrow">Meja tulis di dekat jendela</div><h2>Ruang Menulis</h2><p class="top-sub">Mulai draf, kembangkan gagasan, dan simpan naskah di perangkat ini melalui penyimpanan browser.</p>
+  <div class="editor"><div class="panel"><div class="field"><label for="manuscriptTitle">Judul naskah</label><input id="manuscriptTitle" placeholder="Contoh: Rahasia Taman Tua"></div><div class="field"><label for="manuscript">Isi naskah</label><textarea id="manuscript" placeholder="Mulailah dengan satu kalimat..."></textarea></div><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap"><span class="mini-note"><span id="wordCount">0</span> kata · <span id="charCount">0</span> karakter</span><div style="display:flex;gap:8px"><button class="btn secondary" id="newDraft">Naskah baru</button><button class="btn" id="saveDraft">Simpan naskah</button></div></div><div class="notice" id="draftStatus">Naskah tersimpan di browser perangkat ini. Data tidak otomatis tersinkron ke perangkat lain.</div></div>
+  <div class="panel"><div class="panel-head"><h3>Naskah tersimpan</h3><span>✎</span></div><div id="draftList"></div><hr style="border:0;border-top:1px solid var(--line);margin:18px 0"><h3>Ruang inspirasi</h3><p class="mini-note">“Tidak perlu menunggu sempurna. Tuliskan dahulu, lalu rapikan dengan sabar.”</p><button class="btn outline" id="insertPrompt">Gunakan pemantik cerita</button></div></div>
+</section>
+
+<section class="view" id="view-printing">
+  <div class="eyebrow">Dari naskah menjadi buku</div><h2>Cetak & Terbitkan</h2><p class="top-sub">Rencanakan spesifikasi cetak, hitung perkiraan biaya, dan isi informasi penerbitan untuk kebutuhan pribadi, sekolah, atau umum.</p>
+  <div class="two-col" style="margin-top:20px">
+    <div class="panel"><div class="panel-head"><h3>Perencana pencetakan</h3><span>▣</span></div>
+      <div class="field"><label for="printTitle">Judul buku / naskah</label><input id="printTitle" placeholder="Judul buku"></div>
+      <div class="form-grid"><div class="field"><label for="printPages">Jumlah halaman</label><input type="number" min="1" max="2000" id="printPages" value="100"></div><div class="field"><label for="printCopies">Jumlah eksemplar</label><input type="number" min="1" max="10000" id="printCopies" value="10"></div></div>
+      <div class="form-grid"><div class="field"><label for="printSize">Ukuran buku</label><select id="printSize"><option value="1">A5 (14,8 × 21 cm)</option><option value="1.25">B5 (17,6 × 25 cm)</option><option value=".8">A6 (10,5 × 14,8 cm)</option></select></div><div class="field"><label for="printCover">Sampul</label><select id="printCover"><option value="3500">Softcover</option><option value="7500">Hardcover</option></select></div></div>
+      <div class="field"><label for="printColor">Isi buku</label><select id="printColor"><option value="120">Hitam putih</option><option value="450">Warna</option></select></div>
+      <div class="notice">Perkiraan ilustratif untuk perencanaan awal: biaya sebenarnya bergantung pada bahan, percetakan, finishing, dan lokasi.</div>
+      <div class="kpi"><span>Perkiraan biaya per buku</span><strong id="unitCost">Rp0</strong></div><div class="kpi"><span>Perkiraan total cetak</span><strong id="totalPrint" style="font-size:20px">Rp0</strong></div><button class="btn" id="savePrintPlan" style="margin-top:17px">Simpan rencana cetak</button>
+    </div>
+    <div class="panel"><div class="panel-head"><h3>Informasi penerbitan</h3><span>✧</span></div>
+      <div class="field"><label for="pubTitle">Judul buku</label><input id="pubTitle" placeholder="Judul yang akan diterbitkan"></div>
+      <div class="field"><label for="pubAuthor">Nama penulis</label><input id="pubAuthor" placeholder="Nama penulis / nama pena"></div>
+      <div class="field"><label for="pubType">Jenis penerbitan</label><select id="pubType"><option>Pribadi</option><option>Sekolah</option><option>Antologi</option><option>Umum / komersial</option></select></div>
+      <div class="field"><label for="pubDescription">Sinopsis singkat</label><textarea id="pubDescription" placeholder="Ceritakan isi dan tujuan buku..."></textarea></div>
+      <div class="field"><label for="pubStatus">Tahap naskah</label><select id="pubStatus"><option>Pengembangan naskah</option><option>Siap disunting</option><option>Siap tata letak</option><option>Siap cetak</option></select></div>
+      <button class="btn sage" id="savePublication">Simpan data penerbitan</button><div id="publicationList" style="margin-top:15px"></div>
+    </div>
+  </div>
+  <div class="panel" style="margin-top:20px"><div class="panel-head"><h3>Rencana cetak tersimpan</h3></div><div id="printPlans" class="mini-note">Belum ada rencana cetak.</div></div>
+</section>
+
+<section class="view" id="view-collection">
+  <div class="eyebrow">Rak pribadi</div><h2>Koleksi Saya</h2><p class="top-sub">Semua buku yang kamu tandai, terkumpul dalam satu rak kecil.</p><div class="book-grid" id="collectionBooks" style="margin-top:20px"></div>
+</section>
+<footer class="footer">PERPUSTAKA RAYA · Ruang ilmu, taman cerita, dan tempat gagasan bertumbuh.<br><span style="display:block;margin-top:7px">Demo aplikasi lokal · Data tersimpan di browser perangkat ini.</span></footer>
+</main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="modal-backdrop" id="modalBackdrop"><div class="modal"><div class="modal-head"><h3 id="modalTitle">Konfirmasi</h3><button class="icon-btn" id="closeModal" aria-label="Tutup">×</button></div><div id="modalBody" style="margin-top:18px"></div></div></div>
+<script>
+const seedBooks = [
+{id:1,title:"Taman di Balik Perpustakaan",author:"A. Larasati",category:"Fiksi",price:68000,color:"c1",description:"Sebuah kisah tentang rahasia, persahabatan, dan taman tua yang menyimpan banyak cerita.",text:"Di ujung lorong perpustakaan kerajaan, ada pintu kayu yang hampir selalu tertutup. Tak banyak orang tahu bahwa di baliknya terbentang taman kecil dengan bangku batu dan pohon kamboja.\\n\\nSetiap sore, cahaya matahari menyelinap di antara dedaunan dan jatuh tepat di atas buku-buku yang ditinggalkan di sana. Bagi Aruna, taman itu bukan sekadar tempat beristirahat. Ia adalah tempat di mana pertanyaan-pertanyaan kecil menemukan jawabannya, satu halaman demi satu halaman.\\n\\nHari itu, sebuah buku bersampul hijau menunggunya di atas bangku. Tidak ada nama penulis. Hanya satu kalimat di halaman pertama: “Semua perjalanan besar dimulai ketika seseorang berani membuka pintu.”"},
+{id:2,title:"Atlas Pengetahuan Pelajar",author:"Tim Edukasi Nusantara",category:"Pendidikan",price:52000,color:"c2",description:"Teman belajar berisi ringkasan pengetahuan umum dan cara belajar efektif.",text:"Belajar bukan perlombaan untuk menghafal paling banyak. Belajar adalah perjalanan untuk memahami hubungan antara satu hal dan hal lainnya. Ketika kita bertanya mengapa langit tampak biru, bagaimana sebuah kota tumbuh, atau dari mana sebuah kata berasal, kita sedang membuka jendela pengetahuan.\\n\\nCatat pertanyaanmu. Cari sumber yang dapat dipercaya. Bandingkan jawaban, lalu jelaskan kembali dengan bahasamu sendiri. Kebiasaan kecil ini membantu pengetahuan tinggal lebih lama dalam ingatan."},
+{id:3,title:"Jejak Kerajaan Nusantara",author:"R. Mahardika",category:"Sejarah",price:75000,color:"c3",description:"Pengantar perjalanan kerajaan-kerajaan Nusantara dan warisan budayanya.",text:"Sejarah bukan hanya rangkaian nama dan tanggal. Ia juga kisah tentang manusia yang membangun kota, menyeberangi lautan, menciptakan karya, dan bertukar gagasan. Jejak kerajaan di Nusantara dapat kita temukan pada prasasti, bangunan, cerita lisan, dan tradisi yang masih hidup hingga kini.\\n\\nMempelajari masa lalu membuat kita lebih peka terhadap perubahan. Setiap peninggalan mengajak kita bertanya: bagaimana orang-orang pada zamannya hidup, apa yang mereka yakini, dan warisan apa yang ingin mereka tinggalkan?"},
+{id:4,title:"Seni Menata Kebiasaan",author:"Nadia Prameswari",category:"Pengembangan Diri",price:59000,color:"c4",description:"Panduan ringan membangun rutinitas, mengelola waktu, dan menjaga fokus.",text:"Kebiasaan yang baik tidak selalu dimulai dengan perubahan besar. Sering kali, ia tumbuh dari tindakan sederhana yang diulang dengan penuh kesadaran. Membaca dua halaman, merapikan meja selama lima menit, atau menuliskan tiga hal yang ingin diselesaikan hari ini dapat menjadi awal yang berarti.\\n\\nBuat tujuan terasa mungkin dilakukan. Letakkan alat yang dibutuhkan di tempat yang mudah dijangkau. Rayakan kemajuan kecil, dan bila satu hari terlewat, mulailah lagi tanpa menyalahkan diri sendiri."},
+{id:5,title:"Surat dari Musim Hujan",author:"Dewi Anindya",category:"Puisi",price:47000,color:"c5",description:"Kumpulan puisi lembut tentang rumah, hujan, dan kenangan.",text:"Hujan mengetuk jendela\\nseperti sahabat lama\\nyang tak ingin mengganggu\\nhanya ingin menyapa.\\n\\nDi meja kayu, secangkir teh\\nmenghangatkan sore yang pelan.\\nAku membuka buku,\\ndan waktu belajar berjalan perlahan.\\n\\nAda hal-hal yang tak perlu dikejar;\\nseperti bunga yang tahu\\nkapan waktunya mekar."},
+{id:6,title:"Ensiklopedia Alam Kecil",author:"Pustaka Cendekia",category:"Pendidikan",price:64000,color:"c6",description:"Mengenal tumbuhan, hewan, dan ekosistem di sekitar kita.",text:"Taman yang sederhana dapat menjadi ruang belajar yang luas. Di antara rumput dan bunga, kita bisa menemukan serangga penyerbuk, mengamati bentuk daun, atau memperhatikan bagaimana air meresap ke dalam tanah.\\n\\nAlam mengajarkan bahwa setiap bagian memiliki peran. Menjaga lingkungan dimulai dari rasa ingin tahu, dilanjutkan dengan tindakan kecil: merawat tanaman, mengurangi sampah, dan menghormati kehidupan di sekitar kita."},
+{id:7,title:"Catatan di Meja Kayu",author:"Bima Adikara",category:"Fiksi",price:56000,color:"c7",description:"Cerita hangat tentang keluarga, surat lama, dan arti pulang.",text:"Meja kayu itu telah menemani tiga generasi keluarga. Permukaannya penuh guratan kecil, bekas gelas, dan noda tinta yang tak pernah benar-benar hilang. Namun bagi Nara, setiap tanda adalah bagian dari cerita.\\n\\nSaat membersihkan laci paling bawah, ia menemukan setumpuk surat yang diikat pita. Di sana, ia mengenal sisi lain keluarganya—mimpi-mimpi yang pernah ditunda, keberanian yang tak banyak diceritakan, dan kasih sayang yang diwariskan lewat hal-hal sederhana."},
+{id:8,title:"Mengenal Dunia Buku",author:"Lentera Pustaka",category:"Pendidikan",price:43000,color:"c8",description:"Perjalanan sebuah buku dari gagasan, penyuntingan, hingga terbit.",text:"Sebuah buku bermula dari gagasan, tetapi perjalanan menuju rak pembaca melibatkan banyak tangan. Penulis menyusun kata-kata, penyunting membantu memperjelas pesan, perancang menata halaman, dan tim produksi memastikan naskah menjadi buku yang nyaman dibaca.\\n\\nSetiap tahap memerlukan ketelitian dan kerja sama. Setelah terbit, buku memulai perjalanan baru: menemukan pembacanya, mengundang pertanyaan, dan mungkin menjadi teman yang diingat bertahun-tahun kemudian."}
+];
+const $=id=>document.getElementById(id);
+const readStore=(key,fallback)=>{try{const v=localStorage.getItem("perpustakaRaya_"+key);return v?JSON.parse(v):fallback}catch(e){return fallback}};
+const writeStore=(key,value)=>{try{localStorage.setItem("perpustakaRaya_"+key,JSON.stringify(value));return true}catch(e){toast("Penyimpanan browser tidak tersedia.");return false}};
+let books=readStore("books",seedBooks), saved=readStore("saved",[]), cart=readStore("cart",[]), drafts=readStore("drafts",[]), plans=readStore("plans",[]), publications=readStore("publications",[]), activities=readStore("activities",[{icon:"✧",title:"Perpustaka Raya dibuka",detail:"Selamat datang di ruang ilmu"}]);
+let currentRead=books[0]?.id||1, activeDraftId=null, toastTimer;
+function rupiah(n){return new Intl.NumberFormat("id-ID",{style:"currency",currency:"IDR",maximumFractionDigits:0}).format(n||0)}
+function toast(msg){$("toast").textContent=msg;$("toast").classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>$("toast").classList.remove("show"),2600)}
+function logActivity(title,icon="✧"){activities.unshift({title,icon,detail:new Date().toLocaleString("id-ID",{dateStyle:"medium",timeStyle:"short"})});activities=activities.slice(0,5);writeStore("activities",activities);renderActivity()}
+function bookById(id){return books.find(b=>b.id===id)}
+function cover(b){return `<div class="cover ${b.color||"c1"}"><div class="cover-title">${esc(b.title)}<small>PERPUSTAKA RAYA</small></div></div>`}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function bookCard(b,showPrice=true){let isSaved=saved.includes(b.id);return `<article class="book-card">${cover(b)}<h4 title="${esc(b.title)}">${esc(b.title)}</h4><div class="author">${esc(b.author)} · ${esc(b.category)}</div><div class="book-meta">${showPrice?`<span class="price">${rupiah(b.price)}</span>`:`<span class="tag">Koleksi</span>`}<span class="tag">${esc(b.category)}</span></div><div class="card-actions"><button class="btn small" data-read="${b.id}">Baca</button><button class="btn secondary small" data-save="${b.id}" title="${isSaved?"Hapus dari":"Simpan ke"} koleksi">${isSaved?"♥":"♡"}</button></div>${showPrice?`<button class="btn outline small" style="width:100%;margin-top:7px" data-cart="${b.id}">＋ Keranjang</button>`:""}</article>`}
+function renderBooks(){let query=($("librarySearch")?.value||"").toLowerCase(),cat=$("categoryFilter")?.value||"all",sort=$("sortBooks")?.value||"default";let list=books.filter(b=>(cat==="all"||b.category===cat)&&[b.title,b.author,b.category].some(s=>s.toLowerCase().includes(query)));if(sort==="title")list.sort((a,b)=>a.title.localeCompare(b.title,"id"));if(sort==="price")list.sort((a,b)=>a.price-b.price);$("libraryBooks").innerHTML=list.length?list.map(b=>bookCard(b)).join(""):`<div class="empty">Tidak ada buku yang cocok. Coba kata kunci lain.</div>`;
+let q=($("shopSearch")?.value||"").toLowerCase();let shop=books.filter(b=>[b.title,b.author,b.category].some(s=>s.toLowerCase().includes(q)));$("shopBooks").innerHTML=shop.length?shop.map(b=>bookCard(b)).join(""):`<div class="empty">Buku tidak ditemukan.</div>`;
+$("featuredBooks").innerHTML=books.slice(0,4).map(b=>bookCard(b)).join("");let collection=books.filter(b=>saved.includes(b.id));$("collectionBooks").innerHTML=collection.length?collection.map(b=>bookCard(b,false)).join(""):`<div class="empty">Rakmu masih kosong. Tekan ♡ pada buku yang ingin disimpan.</div>`;
+$("statBooks").textContent=books.length;$("statSaved").textContent=saved.length;$("statDrafts").textContent=drafts.length;$("statCart").textContent=cart.reduce((a,c)=>a+c.qty,0);$("cartCount").textContent=cart.reduce((a,c)=>a+c.qty,0);$("cartCount2").textContent=cart.reduce((a,c)=>a+c.qty,0);renderCart();renderReadList()}
+function renderActivity(){$("activityList").innerHTML=activities.slice(0,4).map(a=>`<div class="activity-row"><div class="activity-icon">${a.icon||"✧"}</div><div><strong>${esc(a.title)}</strong><small>${esc(a.detail||"")}</small></div></div>`).join("")}
+function toggleSave(id){if(saved.includes(id)){saved=saved.filter(x=>x!==id);toast("Buku dihapus dari koleksi.")}else{saved.push(id);toast("Buku disimpan ke koleksi.")}writeStore("saved",saved);renderBooks();logActivity(saved.includes(id)?"Buku ditambahkan ke koleksi":"Buku dihapus dari koleksi","♡")}
+function addCart(id){let item=cart.find(c=>c.id===id);if(item)item.qty++;else cart.push({id,qty:1});writeStore("cart",cart);renderBooks();toast("Buku ditambahkan ke keranjang.");logActivity("Buku ditambahkan ke keranjang","♧")}
+function renderCart(){let items=cart.map(c=>({...c,book:bookById(c.id)})).filter(c=>c.book);$("cartItems").innerHTML=items.length?items.map(c=>`<div class="cart-row"><div class="cart-thumb">▤</div><div class="grow"><strong>${esc(c.book.title)}</strong><small>${rupiah(c.book.price)} · Jumlah ${c.qty}</small></div><div style="display:flex;gap:5px;align-items:center"><button class="btn secondary small" data-qty="${c.id}" data-delta="-1">−</button><button class="btn secondary small" data-qty="${c.id}" data-delta="1">＋</button></div></div>`).join(""):`<div class="empty">Keranjang masih kosong. Pilih buku yang menarik perhatianmu.</div>`;let total=items.reduce((s,c)=>s+c.book.price*c.qty,0);$("cartTotal").textContent=rupiah(total);$("cartCount").textContent=cart.reduce((a,c)=>a+c.qty,0);$("cartCount2").textContent=cart.reduce((a,c)=>a+c.qty,0);$("statCart").textContent=cart.reduce((a,c)=>a+c.qty,0)}
+function renderReadList(){$("readList").innerHTML=books.slice(0,8).map(b=>`<button class="read-pick ${b.id===currentRead?"active":""}" data-readpick="${b.id}"><strong style="font-weight:normal;display:block;font-size:13px">${esc(b.title)}</strong><span class="mini-note">${esc(b.category)}</span></button>`).join("");renderReader()}
+function renderReader(){let b=bookById(currentRead)||books[0];if(!b)return;$("readerCategory").textContent=b.category+" · Bacaan pilihan";$("readerTitle").textContent=b.title;$("readerAuthor").textContent=b.author+" · Perpustaka Raya";$("readerText").textContent=b.text||b.description;$("saveReading").textContent=saved.includes(b.id)?"♥ Sudah di koleksi":"♡ Simpan ke koleksi"}
+function renderDrafts(){$("draftList").innerHTML=drafts.length?drafts.map(d=>`<div class="cart-row"><div class="cart-thumb" style="background:#859276">✎</div><div class="grow"><strong>${esc(d.title||"Naskah tanpa judul")}</strong><small>${d.words||0} kata · ${esc(d.updated||"")}</small></div><button class="btn secondary small" data-editdraft="${d.id}">Buka</button></div>`).join(""):`<p class="mini-note">Belum ada naskah tersimpan. Buat draf pertamamu.</p>`}
+function renderPlans(){$("printPlans").innerHTML=plans.length?plans.map(p=>`<div class="cart-row"><div class="cart-thumb">▣</div><div class="grow"><strong>${esc(p.title||"Naskah tanpa judul")}</strong><small>${p.pages} halaman · ${p.copies} eksemplar · ${esc(p.size)} · ${esc(p.cover)}</small></div><strong>${rupiah(p.total)}</strong></div>`).join(""):`<p class="mini-note">Belum ada rencana cetak.</p>`}
+function renderPublications(){$("publicationList").innerHTML=publications.length?publications.map(p=>`<div class="notice"><strong>${esc(p.title)}</strong><br>${esc(p.author)} · ${esc(p.type)}<br><span>${esc(p.status)}</span></div>`).join(""):`<p class="mini-note">Belum ada data penerbitan.</p>`}
+function showView(name){document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id==="view-"+name));document.querySelectorAll("[data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===name));$("sidebar").classList.remove("open");window.scrollTo({top:0,behavior:"smooth"});if(name==="writing")renderDrafts();if(name==="printing"){calcPrint();renderPlans();renderPublications()}if(name==="shop")renderCart()}
+document.querySelectorAll("[data-view]").forEach(b=>b.addEventListener("click",()=>showView(b.dataset.view)));
+document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>showView(b.dataset.go)));
+$("menuBtn").addEventListener("click",()=>$("sidebar").classList.toggle("open"));
+$("quickSearch").addEventListener("click",()=>{showView("library");$("librarySearch").focus()});
+["librarySearch","categoryFilter","sortBooks","shopSearch"].forEach(id=>$(id).addEventListener(id==="librarySearch"||id==="shopSearch"?"input":"change",renderBooks));
+document.addEventListener("click",e=>{let r=e.target.closest("[data-read]");if(r){currentRead=+r.dataset.read;showView("reading");renderReadList();return}let s=e.target.closest("[data-save]");if(s){toggleSave(+s.dataset.save);return}let c=e.target.closest("[data-cart]");if(c){addCart(+c.dataset.cart);return}let rp=e.target.closest("[data-readpick]");if(rp){currentRead=+rp.dataset.readpick;renderReadList();return}let q=e.target.closest("[data-qty]");if(q){let id=+q.dataset.qty,delta=+q.dataset.delta,item=cart.find(x=>x.id===id);if(item){item.qty+=delta;if(item.qty<=0)cart=cart.filter(x=>x.id!==id);writeStore("cart",cart);renderBooks()}return}let ed=e.target.closest("[data-editdraft]");if(ed){let d=drafts.find(x=>x.id===ed.dataset.editdraft);if(d){activeDraftId=d.id;$("manuscriptTitle").value=d.title;$("manuscript").value=d.content;updateWordCount();toast("Naskah dibuka.");window.scrollTo({top:0,behavior:"smooth"})}}});
+$("saveReading").addEventListener("click",()=>toggleSave(currentRead));
+$("nextReading").addEventListener("click",()=>{let i=books.findIndex(b=>b.id===currentRead);currentRead=books[(i+1)%books.length].id;renderReadList()});
+$("openCart").addEventListener("click",()=>$("cartPanel").scrollIntoView({behavior:"smooth",block:"center"}));
+$("clearCart").addEventListener("click",()=>{cart=[];writeStore("cart",cart);renderBooks();toast("Keranjang dikosongkan.")});
+function modal(title,body){$("modalTitle").textContent=title;$("modalBody").innerHTML=body;$("modalBackdrop").classList.add("show")}
+function closeModal(){$("modalBackdrop").classList.remove("show")}
+$("closeModal").addEventListener("click",closeModal);$("modalBackdrop").addEventListener("click",e=>{if(e.target===$("modalBackdrop"))closeModal()});
+$("checkoutBtn").addEventListener("click",()=>{if(!cart.length){toast("Keranjang masih kosong.");return}let total=cart.reduce((s,c)=>s+(bookById(c.id)?.price||0)*c.qty,0);modal("Ringkasan pesanan",`<p>Ini adalah simulasi pemesanan, belum ada pembayaran atau pengiriman nyata.</p><div class="kpi"><span>Jumlah judul</span><strong>${cart.length}</strong></div><div class="kpi"><span>Total perkiraan</span><strong>${rupiah(total)}</strong></div><div class="field" style="margin-top:15px"><label for="buyerName">Nama pemesan</label><input id="buyerName" placeholder="Nama lengkap"></div><div class="field"><label for="buyerPurpose">Keperluan</label><select id="buyerPurpose"><option>Pribadi</option><option>Sekolah</option><option>Perpustakaan umum</option></select></div><button class="btn" id="confirmOrder" style="width:100%">Catat pesanan simulasi</button>`);setTimeout(()=>{let btn=$("confirmOrder");if(btn)btn.addEventListener("click",()=>{let name=$("buyerName").value.trim();if(!name){toast("Isi nama pemesan terlebih dahulu.");return}let orders=readStore("orders",[]);orders.unshift({name,purpose:$("buyerPurpose").value,total,date:new Date().toLocaleString("id-ID")});writeStore("orders",orders);cart=[];writeStore("cart",cart);closeModal();renderBooks();logActivity("Pesanan simulasi dicatat","♧");toast("Pesanan simulasi berhasil dicatat di browser.")})},0)});
+function updateWordCount(){let t=$("manuscript").value.trim();$("wordCount").textContent=t?t.split(/\s+/).length:0;$("charCount").textContent=$("manuscript").value.length}
+$("manuscript").addEventListener("input",updateWordCount);
+$("newDraft").addEventListener("click",()=>{if($("manuscript").value.trim()&&!confirm("Mulai naskah baru? Simpan draf saat ini terlebih dahulu jika diperlukan."))return;activeDraftId=null;$("manuscriptTitle").value="";$("manuscript").value="";updateWordCount();$("draftStatus").textContent="Naskah baru siap ditulis."});
+$("saveDraft").addEventListener("click",()=>{let title=$("manuscriptTitle").value.trim()||"Naskah tanpa judul",content=$("manuscript").value;if(!content.trim()){toast("Tulis beberapa kalimat sebelum menyimpan.");return}let words=content.trim().split(/\s+/).length,updated=new Date().toLocaleString("id-ID");let id=activeDraftId||("draft-"+Date.now());let d={id,title,content,words,updated};let i=drafts.findIndex(x=>x.id===id);if(i>=0)drafts[i]=d;else drafts.unshift(d);activeDraftId=id;writeStore("drafts",drafts);renderDrafts();$("draftStatus").textContent="Tersimpan: "+updated; $("statDrafts").textContent=drafts.length;logActivity("Naskah disimpan: "+title,"✎");toast("Naskah berhasil disimpan.")});
+$("insertPrompt").addEventListener("click",()=>{if($("manuscript").value&&!confirm("Tambahkan pemantik ke naskah yang sedang ditulis?"))return;$("manuscript").value+=($("manuscript").value?"\n\n":"")+"Di perpustakaan tua itu, sebuah buku tanpa judul tiba-tiba muncul di rak paling atas. Pada halaman pertamanya tertulis sebuah pertanyaan yang hanya bisa dijawab oleh pembacanya...";updateWordCount();$("manuscript").focus()});
+function calcPrint(){let pages=Math.max(1,+$("printPages").value||1),copies=Math.max(1,+$("printCopies").value||1),size=+$("printSize").value,color=+$("printColor").value,cover=+$("printCover").value;let unit=Math.round(pages*color*size+cover+2500);$("unitCost").textContent=rupiah(unit);$("totalPrint").textContent=rupiah(unit*copies);return {pages,copies,size,cover,color,unit,total:unit*copies}}
+["printPages","printCopies","printSize","printColor","printCover"].forEach(id=>$(id).addEventListener("input",calcPrint));
+$("savePrintPlan").addEventListener("click",()=>{let p=calcPrint();p.title=$("printTitle").value.trim()||"Naskah tanpa judul";p.size=$("printSize").selectedOptions[0].text;p.cover=$("printCover").selectedOptions[0].text;p.date=new Date().toLocaleDateString("id-ID");plans.unshift(p);writeStore("plans",plans);renderPlans();logActivity("Rencana cetak disimpan","▣");toast("Rencana cetak tersimpan.")});
+$("savePublication").addEventListener("click",()=>{let title=$("pubTitle").value.trim(),author=$("pubAuthor").value.trim();if(!title||!author){toast("Isi judul buku dan nama penulis.");return}publications.unshift({title,author,type:$("pubType").value,description:$("pubDescription").value,status:$("pubStatus").value,date:new Date().toLocaleDateString("id-ID")});writeStore("publications",publications);renderPublications();logActivity("Data penerbitan disimpan","✧");toast("Informasi penerbitan tersimpan.")});
+$("dateLine").textContent=new Date().toLocaleDateString("id-ID",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+renderBooks();renderActivity();renderDrafts();renderPlans();renderPublications();calcPrint();updateWordCount();
+</script>
+</body>
+</html>
